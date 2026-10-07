@@ -35,7 +35,7 @@ To keep learning, building, experimenting, and gradually grow into a skilled sof
 <div align="center">
 
 <!-- STREAK:START -->
-<img src="https://streak-stats.demolab.com?user=SachinRathnayaka&theme=github-dark-blue&hide_border=true&border_radius=10&ring=79c0ff&fire=ff7b72&currStreakLabel=79c0ff" height="165" alt="GitHub Streak"/>
+<img src="./profile/streak.svg" height="165" alt="GitHub contribution streak"/>
 <!-- STREAK:END -->
 
 </div>
