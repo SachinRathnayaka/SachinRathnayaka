@@ -1,0 +1,75 @@
+name: Update profile dashboard
+
+on:
+  schedule:
+    - cron: '30 0 * * *' # Daily at 06:00 Asia/Colombo.
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/dashboard.yml'
+      - 'scripts/update_dashboard.py'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: profile-dashboard
+  cancel-in-progress: false
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
+        with:
+          python-version: '3.13'
+      - name: Refresh public projects
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python scripts/update_dashboard.py
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: dashboard
+          path: |
+            README.md
+            profile/streak.svg
+          retention-days: 1
+          if-no-files-found: error
+
+  publish:
+    needs: generate
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: dashboard
+          path: generated-dashboard
+      - name: Preserve concurrent edits
+        run: |
+          git fetch origin main
+          if [ "$(git rev-parse HEAD)" != "$(git rev-parse origin/main)" ]; then
+            echo 'Profile changed during generation; rerun to preserve the newer edits.'
+            exit 1
+          fi
+          cp generated-dashboard/README.md README.md
+          if [ -f generated-dashboard/profile/streak.svg ]; then
+            mkdir -p profile
+            cp generated-dashboard/profile/streak.svg profile/streak.svg
+          fi
+      - name: Commit dashboard changes
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add README.md
+          if [ -f profile/streak.svg ]; then git add profile/streak.svg; fi
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'docs: refresh profile dashboard'
+          git push
