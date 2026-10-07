@@ -1,5 +1,6 @@
 """Refresh public project links and use a locally generated streak card."""
 import html
+import hashlib
 import json
 import os
 from pathlib import Path
@@ -95,7 +96,8 @@ def main():
     readme = ROOT / 'README.md'
     content = replace_section(readme.read_text(encoding='utf-8'), 'PROJECTS', body)
     if (ROOT / 'profile/streak.svg').is_file():
-        content = replace_section(content, 'STREAK', '<img src="./profile/streak.svg" height="165" alt="GitHub contribution streak"/>')
+        version = hashlib.sha256((ROOT / 'profile/streak.svg').read_bytes()).hexdigest()[:16]
+        content = replace_section(content, 'STREAK', f'<img src="./profile/streak.svg?v={version}" height="210" alt="GitHub contribution streak"/>')
     readme.write_text(content, encoding='utf-8')
     print(f'Updated dashboard: {min(len(projects), 12)} public projects.')
 
