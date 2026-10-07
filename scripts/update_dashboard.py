@@ -35,13 +35,24 @@ def generate_stats(headers):
         current += 1
         day -= timedelta(days=1)
     values = (calendar['totalContributions'], current, longest)
+    render_stats(values)
+
+
+def render_stats(values):
     labels = ('Contributions', 'Current streak', 'Longest streak')
-    svg = ['<svg xmlns="http://www.w3.org/2000/svg" width="660" height="170" viewBox="0 0 660 170">',
-           '<rect width="660" height="170" rx="12" fill="#0d1117"/>',
-           '<text x="330" y="28" text-anchor="middle" fill="#8b949e" font-family="sans-serif" font-size="13">GitHub activity · past year · updated daily</text>']
+    svg = ['<svg xmlns="http://www.w3.org/2000/svg" width="660" height="210" viewBox="0 0 660 210" role="img" aria-label="GitHub contribution streak statistics">',
+           '<rect x="1" y="1" width="658" height="208" rx="14" fill="#0d1117" stroke="#30363d"/>',
+           '<path d="M220 42V172M440 42V172" stroke="#30363d"/>',
+           '<circle cx="330" cy="95" r="50" fill="none" stroke="#79c0ff" stroke-width="4"/>',
+           '<rect x="309" y="34" width="42" height="30" fill="#0d1117"/>',
+           '<path d="M330 31C335 42 345 43 340 54C338 59 333 62 329 61C319 60 315 52 320 45C320 50 323 51 324 48C327 44 326 39 330 31Z" fill="#ff7b72"/>',
+           '<text x="110" y="58" text-anchor="middle" fill="#8b949e" font-family="sans-serif" font-size="20">✦</text>',
+           '<path d="M544 43h12v12c0 9-12 9-12 0ZM544 46h-6v6c0 6 6 6 6 6M556 46h6v6c0 6-6 6-6 6M550 62v7M543 70h14" fill="none" stroke="#79c0ff" stroke-width="2"/>',
+           '<text x="330" y="191" text-anchor="middle" fill="#8b949e" font-family="sans-serif" font-size="12">Past-year contributions and streaks · refreshed daily</text>']
     for x, value, label in zip((110, 330, 550), values, labels):
-        svg.append(f'<text x="{x}" y="87" text-anchor="middle" fill="#79c0ff" font-family="sans-serif" font-size="32">{value}</text>')
-        svg.append(f'<text x="{x}" y="118" text-anchor="middle" fill="#c9d1d9" font-family="sans-serif" font-size="14">{label}</text>')
+        svg.append(f'<text x="{x}" y="108" text-anchor="middle" fill="#79c0ff" font-family="sans-serif" font-size="32">{value}</text>')
+        label_y = 163 if x == 330 else 143
+        svg.append(f'<text x="{x}" y="{label_y}" text-anchor="middle" fill="#c9d1d9" font-family="sans-serif" font-size="14">{label}</text>')
     svg.append('</svg>')
     (ROOT / 'profile').mkdir(exist_ok=True)
     (ROOT / 'profile/streak.svg').write_text('\n'.join(svg), encoding='utf-8')
