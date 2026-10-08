@@ -35,7 +35,7 @@ To keep learning, building, experimenting, and gradually grow into a skilled sof
 <div align="center">
 
 <!-- STREAK:START -->
-<img src="./profile/streak.svg?v=52ad6021665dd626" height="210" alt="GitHub contribution streak"/>
+<img src="./profile/streak.svg?v=06b2454d679f9f14" height="210" alt="GitHub contribution streak"/>
 <!-- STREAK:END -->
 
 </div>
