@@ -35,7 +35,7 @@ To keep learning, building, experimenting, and gradually grow into a skilled sof
 <div align="center">
 
 <!-- STREAK:START -->
-<img src="./profile/streak.svg?v=235c3136185087c7" height="210" alt="GitHub contribution streak"/>
+<img src="./profile/streak.svg?v=c999c3245cf8df0e" height="210" alt="GitHub contribution streak"/>
 <!-- STREAK:END -->
 
 </div>
@@ -47,8 +47,8 @@ To keep learning, building, experimenting, and gradually grow into a skilled sof
 Public projects, ordered by recent activity. This section refreshes daily.
 
 <!-- PROJECTS:START -->
-- <a href="https://github.com/SachinRathnayaka/SR-Inqly"><strong>SR-Inqly</strong></a> — A lightweight Windows screen annotation app to draw, highlight, add text, and capture screenshots over any application.
 - <a href="https://github.com/SachinRathnayaka/Smart-Aquarium-Monitor-Control-System"><strong>Smart-Aquarium-Monitor-Control-System</strong></a> — Fully open-source IoT aquarium monitoring and automation system — ESP32 firmware, Firebase RTDB, Web Dashboard, Android &amp; Windows apps, KiCad PCB
+- <a href="https://github.com/SachinRathnayaka/SR-Inqly"><strong>SR-Inqly</strong></a> — A lightweight Windows screen annotation app to draw, highlight, add text, and capture screenshots over any application.
 <!-- PROJECTS:END -->
 
 ---
